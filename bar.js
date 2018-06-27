@@ -1,3 +1,5 @@
-module.exports = function bar () {
+function bar () {
   return 'bar'
 }
+
+module.exports = { bar }

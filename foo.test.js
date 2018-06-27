@@ -1,16 +1,16 @@
 const rewire = require('rewire')
-const axios = require('axios')
 
 let { foo1, foo2, foo3 } = require('./foo.js')
 const _foo = rewire('./foo.js').__get__('_foo')
-const bar = require('./bar.js')
 
 jest.mock('./bar.js')
+const { bar } = require('./bar.js')
 bar.mockImplementation((msg) => 'barMock')
 
-jest.mock('axios')
+// jest.mock('jest')
+const axios = require('axios')
 const resp = { data: '12345678901234567890'}
-axios.get.mockResolvedValue(resp)
+axios.get.mockResolvedValueOnce(resp)
 
 describe('foo', () => {
   test('mock foo1', () => {
@@ -29,6 +29,11 @@ describe('foo', () => {
     expect.assertions(1)
     const data = await foo3()
     expect(data).toBe('123456789012345')
+  })
+
+  test('call axios from __mocks__', async () => {
+    const { data } = await axios.get('https://example.com')
+    expect(data).toBe('axiosMockModule')
   })
 
   test('_foo is an internal function', () => {

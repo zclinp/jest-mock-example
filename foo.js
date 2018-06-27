@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const bar = require('./bar.js')
+const { bar } = require('./bar.js')
 
 function foo1 () {
   return 'foo1'
