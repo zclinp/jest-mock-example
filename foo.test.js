@@ -7,10 +7,13 @@ jest.mock('./bar.js')
 const { bar } = require('./bar.js')
 bar.mockImplementation((msg) => 'barMock')
 
+let resp
 // jest.mock('jest')
 const axios = require('axios')
-const resp = { data: '12345678901234567890'}
+resp = { data: '12345678901234567890'}
 axios.get.mockResolvedValueOnce(resp)
+
+const zoo = require('@scope/zoo')
 
 describe('foo', () => {
   test('mock foo1', () => {
@@ -38,5 +41,10 @@ describe('foo', () => {
 
   test('_foo is an internal function', () => {
     expect(_foo()).toBe('_foo')
+  })
+
+  test('call scope module from __mocks__', () => {
+    expect(zoo.get('dog')).toBe('wang')
+    expect(zoo.get('cat')).toBe('meow')
   })
 })
