@@ -1,4 +1,3 @@
-  # try-jest-mock
   
   npm install &
   
